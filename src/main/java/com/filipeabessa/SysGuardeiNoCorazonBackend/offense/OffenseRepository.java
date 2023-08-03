@@ -16,20 +16,20 @@ import static com.filipeabessa.SysGuardeiNoCorazonBackend.common.ConnectionManag
 public class OffenseRepository implements GenericRepository<OffenseEntity> {
 
     public OffenseRepository() {
-        String sql = "CREATE TABLE IF NOT EXISTS offenses (" +
-                "id INT PRIMARY KEY AUTO_INCREMENT," +
-                "disaffection_id BIGINT NOT NULL," +
-                "title VARCHAR(50) NOT NULL," +
-                "description VARCHAR(255) NOT NULL," +
-                "cursed_family_member VARCHAR(20) NOT NULL," +
-                "offending_person VARCHAR(255) NOT NULL," +
-                "FOREIGN KEY (disaffection_id) REFERENCES disaffections(id)" +
-                ");";
-        try (PreparedStatement preparedStatement = getCurrentConnection().prepareStatement(sql)) {
-            preparedStatement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+//        String sql = "CREATE TABLE IF NOT EXISTS offenses (" +
+//                "id INT PRIMARY KEY AUTO_INCREMENT," +
+//                "disaffection_id BIGINT NOT NULL," +
+//                "title VARCHAR(50) NOT NULL," +
+//                "description VARCHAR(255) NOT NULL," +
+//                "cursed_family_member VARCHAR(20) NOT NULL," +
+//                "offending_person VARCHAR(255) NOT NULL," +
+//                "FOREIGN KEY (disaffection_id) REFERENCES disaffections(id)" +
+//                ");";
+//        try (PreparedStatement preparedStatement = getCurrentConnection().prepareStatement(sql)) {
+//            preparedStatement.execute();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
     }
     @Override
     public OffenseEntity create(OffenseEntity offenseEntity) {
