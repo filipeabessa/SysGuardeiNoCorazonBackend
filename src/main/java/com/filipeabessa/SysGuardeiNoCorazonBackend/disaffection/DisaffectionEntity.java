@@ -2,6 +2,7 @@ package com.filipeabessa.SysGuardeiNoCorazonBackend.disaffection;
 
 import com.filipeabessa.SysGuardeiNoCorazonBackend.offense.OffenseEntity;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -9,8 +10,8 @@ public class DisaffectionEntity {
     private long id;
     private String title;
     private String description;
-    private Date createdAt;
-    private Date updatedAt;
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
     private String witnesses;
     private String involvedPeople;
     private List<OffenseEntity> offenses;
@@ -39,19 +40,19 @@ public class DisaffectionEntity {
         this.description = description;
     }
 
-    public Date getCreatedAt() {
+    public Timestamp getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdatedAt() {
+    public Timestamp getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }
 
