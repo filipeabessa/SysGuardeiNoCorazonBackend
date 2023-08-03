@@ -94,7 +94,7 @@ public class OffenseRepository implements GenericRepository<OffenseEntity> {
 
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                return Optional.of(mapResultSetToOffenseEntity(resultSet));
+                return Optional.of(mapResultSetToEntity(resultSet));
             } else {
                 throw new RuntimeException("Offense not found");
             }
@@ -127,7 +127,7 @@ public class OffenseRepository implements GenericRepository<OffenseEntity> {
             ResultSet resultSet = preparedStatement.executeQuery();
             List<OffenseEntity> offenses = new ArrayList<>();
             while (resultSet.next()) {
-                offenses.add(mapResultSetToOffenseEntity(resultSet));
+                offenses.add(mapResultSetToEntity(resultSet));
             }
             return offenses;
         } catch (SQLException e) {
@@ -136,7 +136,8 @@ public class OffenseRepository implements GenericRepository<OffenseEntity> {
         return new ArrayList<>();
     }
 
-    private OffenseEntity mapResultSetToOffenseEntity(ResultSet resultSet) throws SQLException {
+    @Override
+    public OffenseEntity mapResultSetToEntity(ResultSet resultSet) throws SQLException {
         OffenseEntity offenseEntity = new OffenseEntity();
         offenseEntity.setId(resultSet.getLong("id"));
         offenseEntity.setDisaffectionId(resultSet.getLong("disaffection_id"));

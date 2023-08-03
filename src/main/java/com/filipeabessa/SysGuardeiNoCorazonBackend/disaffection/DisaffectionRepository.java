@@ -4,6 +4,7 @@ import com.filipeabessa.SysGuardeiNoCorazonBackend.common.GenericRepository;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
@@ -50,7 +51,22 @@ public class DisaffectionRepository implements GenericRepository<DisaffectionEnt
 
     @Override
     public DisaffectionEntity update(DisaffectionEntity entity) {
-        return null;
+        String sql = "UPDATE disaffections SET name = ?, description = ?, created_at = ?, updated_at = ?, witnesses = ?, involved_people = ? WHERE id = ?";
+
+        try (PreparedStatement preparedStatement = getCurrentConnection().prepareStatement(sql)) {
+            preparedStatement.setString(1, entity.getTitle());
+            preparedStatement.setString(2, entity.getDescription());
+            preparedStatement.setTimestamp(3, entity.getCreatedAt());
+            preparedStatement.setTimestamp(4, entity.getUpdatedAt());
+            preparedStatement.setString(5, entity.getWitnesses());
+            preparedStatement.setString(6, entity.getInvolvedPeople());
+            preparedStatement.setLong(7, entity.getId());
+            preparedStatement.execute();
+            return entity;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -71,5 +87,19 @@ public class DisaffectionRepository implements GenericRepository<DisaffectionEnt
     @Override
     public boolean existsById(long id) {
         return false;
+    }
+
+    @Override
+    public DisaffectionEntity mapResultSetToEntity(ResultSet resultSet) throws SQLException {
+        DisaffectionEntity entity = new DisaffectionEntity();
+
+        entity.setId(resultSet.getLong("id"));
+        entity.setTitle(resultSet.getString("name"));
+        entity.setDescription(resultSet.getString("description"));
+        entity.setCreatedAt(resultSet.getTimestamp("created_at"));
+        entity.setUpdatedAt(resultSet.getTimestamp("updated_at"));
+        entity.setWitnesses(resultSet.getString("witnesses"));
+        entity.setInvolvedPeople(resultSet.getString("involved_people"));
+        return entity;
     }
 }
