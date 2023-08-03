@@ -22,10 +22,10 @@ public class OffenseController {
         this.offenseService = offenseService;
     }
 
-    @PostMapping()
-    public ResponseEntity<OffenseEntity> create(@RequestBody CreateOffenseDto createOffenseDto) {
+    @PostMapping("/{disaffectionId}")
+    public ResponseEntity<OffenseEntity> create(@PathVariable long disaffectionId, @RequestBody CreateOffenseDto createOffenseDto) {
         try {
-            return ResponseEntity.ok(offenseService.create(createOffenseDto));
+            return ResponseEntity.ok(offenseService.create(disaffectionId, createOffenseDto));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
