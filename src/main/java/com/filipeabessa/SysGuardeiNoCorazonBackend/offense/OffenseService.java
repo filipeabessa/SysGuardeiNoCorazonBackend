@@ -26,7 +26,9 @@ public class OffenseService {
     }
 
     public OffenseEntity findById(long offenseId) {
-        return offenseRepository.findById(offenseId).get();
+        Optional<OffenseEntity> offenseEntityOptional = offenseRepository.findById(offenseId);
+
+        return offenseEntityOptional.orElse(null);
     }
 
     public ReadAllOffensesDto findAll() {

@@ -1,9 +1,12 @@
 package com.filipeabessa.SysGuardeiNoCorazonBackend.disaffection;
 
 import com.filipeabessa.SysGuardeiNoCorazonBackend.disaffection.dtos.CreateDisaffectionDto;
+import com.filipeabessa.SysGuardeiNoCorazonBackend.disaffection.dtos.ReadAllDisaffectionsDto;
+import com.filipeabessa.SysGuardeiNoCorazonBackend.disaffection.dtos.UpdateDisaffectionDto;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.Optional;
 
 @Service
 public class DisaffectionService {
@@ -23,8 +26,24 @@ public class DisaffectionService {
         return disaffectionRepository.create(disaffectionEntity);
     }
 
-    public DisaffectionEntity update(DisaffectionEntity disaffectionEntity) {
-        return disaffectionRepository.update(disaffectionEntity);
+    public ReadAllDisaffectionsDto findAll() {
+        return new ReadAllDisaffectionsDto(disaffectionRepository.findAll());
+    }
+
+    public DisaffectionEntity update(long disaffectionId, UpdateDisaffectionDto updateDisaffectionDto) throws Exception {
+        Optional<DisaffectionEntity> disaffectionEntityOptional = disaffectionRepository.findById(disaffectionId);
+
+        if (disaffectionEntityOptional.isEmpty()) {
+            throw new Exception("Disaffection not found");
+        }
+
+        DisaffectionEntity disaffectionEntityToUpdate = disaffectionEntityOptional.get();
+        disaffectionEntityToUpdate.setTitle(updateDisaffectionDto.getTitle());
+        disaffectionEntityToUpdate.setDescription(updateDisaffectionDto.getDescription());
+        disaffectionEntityToUpdate.setWitnesses(updateDisaffectionDto.getWitnesses());
+        disaffectionEntityToUpdate.setInvolvedPeople(updateDisaffectionDto.getInvolvedPeople());
+
+        return disaffectionRepository.update(disaffectionEntityToUpdate);
     }
 
     public void delete(Long id) {
