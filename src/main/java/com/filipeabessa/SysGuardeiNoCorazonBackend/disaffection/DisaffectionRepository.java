@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,22 +72,66 @@ public class DisaffectionRepository implements GenericRepository<DisaffectionEnt
 
     @Override
     public void deleteById(long id) {
+        findById(id).ifPresentOrElse(entity -> {
+            String sql = "DELETE FROM disaffections WHERE id = ?";
 
+            try (PreparedStatement preparedStatement = getCurrentConnection().prepareStatement(sql)) {
+                preparedStatement.setLong(1, id);
+                preparedStatement.execute();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }, () -> {
+            throw new RuntimeException("Disaffection not found");
+        });
     }
 
     @Override
     public List<DisaffectionEntity> findAll() {
-        return null;
+        String sql = "SELECT * FROM disaffections";
+
+        try (PreparedStatement preparedStatement = getCurrentConnection().prepareStatement(sql)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            List<DisaffectionEntity> disaffectionEntities = new ArrayList<>();
+            while (resultSet.next()) {
+                disaffectionEntities.add(mapResultSetToEntity(resultSet));
+            }
+            return disaffectionEntities;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public Optional<DisaffectionEntity> findById(long id) {
-        return Optional.empty();
+        String sql = "SELECT * FROM disaffections WHERE id = ?";
+
+        try (PreparedStatement preparedStatement = getCurrentConnection().prepareStatement(sql)) {
+            preparedStatement.setLong(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return Optional.of(mapResultSetToEntity(resultSet));
+            }
+            return Optional.empty();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Optional.empty();
+        }
     }
 
     @Override
     public boolean existsById(long id) {
-        return false;
+        String sql = "SELECT * FROM disaffections WHERE id = ?";
+
+        try (PreparedStatement preparedStatement = getCurrentConnection().prepareStatement(sql)) {
+            preparedStatement.setLong(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
