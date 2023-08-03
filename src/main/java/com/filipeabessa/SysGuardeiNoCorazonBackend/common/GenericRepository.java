@@ -1,11 +1,15 @@
 package com.filipeabessa.SysGuardeiNoCorazonBackend.common;
 
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public interface GenericRepository<T> {
-    T create(T t);
-    T update(T t);
-    T findById(long id);
+    T create(T entity) throws SQLException;
+    T update(T entity);
+    void deleteById(long id);
     List<T> findAll();
-    void delete(T t);
+    Optional<T> findById(long id);
+    boolean existsById(long id);
 }
+

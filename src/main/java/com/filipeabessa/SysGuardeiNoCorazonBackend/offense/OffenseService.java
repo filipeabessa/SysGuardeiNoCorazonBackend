@@ -6,6 +6,7 @@ import com.filipeabessa.SysGuardeiNoCorazonBackend.offense.dtos.UpdateOffenseDto
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OffenseService {
@@ -25,7 +26,7 @@ public class OffenseService {
     }
 
     public OffenseEntity findById(long offenseId) {
-        return offenseRepository.findById(offenseId);
+        return offenseRepository.findById(offenseId).get();
     }
 
     public ReadAllOffensesDto findAll() {
@@ -33,27 +34,25 @@ public class OffenseService {
         return new ReadAllOffensesDto(offenses);
     }
 
-    public OffenseEntity update(long offenseId, UpdateOffenseDto updateOffenseDto) {
-        OffenseEntity offenseEntity = offenseRepository.findById(offenseId);
-
-        if (offenseEntity == null) {
-            return null;
+    public OffenseEntity update(long offenseId, UpdateOffenseDto updateOffenseDto) throws Exception {
+        Optional<OffenseEntity> offenseEntityOptional = offenseRepository.findById(offenseId);
+        if (offenseEntityOptional.isEmpty()) {
+            throw new Exception("Offense not found");
         }
-
+        OffenseEntity offenseEntity = offenseEntityOptional.get();
         offenseEntity.setTitle(updateOffenseDto.getTitle());
         offenseEntity.setDescription(updateOffenseDto.getDescription());
         offenseEntity.setCursedFamilyMember(updateOffenseDto.getCursedFamilyMember());
         offenseEntity.setOffendingPerson(updateOffenseDto.getOffendingPerson());
 
-        return new OffenseEntity();
+        return offenseRepository.update(offenseEntity);
     }
 
     public void delete(Long offenseId) throws Exception {
-        OffenseEntity offenseEntity = offenseRepository.findById(offenseId);
-
-        if (offenseEntity == null) {
+        try {
+            offenseRepository.deleteById(offenseId);
+        } catch (Exception e) {
             throw new Exception("Offense not found");
         }
-        offenseRepository.delete(offenseEntity);
     }
 }

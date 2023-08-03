@@ -1,5 +1,6 @@
 package com.filipeabessa.SysGuardeiNoCorazonBackend.offense;
 
+import com.filipeabessa.SysGuardeiNoCorazonBackend.common.exceptions.NotFoundException;
 import com.filipeabessa.SysGuardeiNoCorazonBackend.offense.dtos.CreateOffenseDto;
 import com.filipeabessa.SysGuardeiNoCorazonBackend.offense.dtos.ReadAllOffensesDto;
 import com.filipeabessa.SysGuardeiNoCorazonBackend.offense.dtos.UpdateOffenseDto;
@@ -50,8 +51,16 @@ public class OffenseController {
     }
 
     @PatchMapping("/{offenseId}")
-    public ResponseEntity<OffenseEntity> update(@PathVariable long offenseId, @RequestBody UpdateOffenseDto updateOffenseDto) {
-        return ResponseEntity.ok(offenseService.update(offenseId, updateOffenseDto));
+    public ResponseEntity<Object> update(@PathVariable long offenseId, @RequestBody UpdateOffenseDto updateOffenseDto) {
+        try {
+            return ResponseEntity.ok(offenseService.update(offenseId, updateOffenseDto));
+        } catch (Exception e) {
+            if (e instanceof NotFoundException) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            }
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 
     @DeleteMapping("/{offenseId}")
