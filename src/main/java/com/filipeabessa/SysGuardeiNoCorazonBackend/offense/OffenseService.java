@@ -14,9 +14,9 @@ public class OffenseService {
     OffenseService(OffenseRepository offenseRepository) {
         this.offenseRepository = offenseRepository;
     }
-    public OffenseEntity create(long disaffectionId, CreateOffenseDto createOffenseDto) {
+    public OffenseEntity create(CreateOffenseDto createOffenseDto) {
         OffenseEntity offenseEntity = new OffenseEntity();
-        offenseEntity.setDisaffectionId(disaffectionId);
+        offenseEntity.setDisaffectionId(createOffenseDto.getDisaffectionId());
         offenseEntity.setTitle(createOffenseDto.getTitle());
         offenseEntity.setDescription(createOffenseDto.getDescription());
         offenseEntity.setCursedFamilyMember(createOffenseDto.getCursedFamilyMember());

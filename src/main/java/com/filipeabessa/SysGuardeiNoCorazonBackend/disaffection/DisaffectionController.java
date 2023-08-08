@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/disaffection")
 public class DisaffectionController {
-    private DisaffectionService disaffectionService;
+    private final DisaffectionService disaffectionService;
 
     public DisaffectionController(DisaffectionService disaffectionService) {
         this.disaffectionService = disaffectionService;
@@ -27,7 +27,7 @@ public class DisaffectionController {
     @PostMapping("")
     public ResponseEntity<DisaffectionEntity> create(@RequestBody CreateDisaffectionDto createDisaffectionDto) {
         try {
-            return ResponseEntity.ok(disaffectionService.create(createDisaffectionDto));
+            return ResponseEntity.status(HttpStatus.CREATED).body(disaffectionService.create(createDisaffectionDto));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }

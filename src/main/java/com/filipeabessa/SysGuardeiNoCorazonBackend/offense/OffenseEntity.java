@@ -2,7 +2,7 @@ package com.filipeabessa.SysGuardeiNoCorazonBackend.offense;
 
 public class OffenseEntity {
     private long id;
-    private long disaffectionId;
+    private Long disaffectionId;
 
     private String title;
     private String description;
@@ -21,7 +21,7 @@ public class OffenseEntity {
         return disaffectionId;
     }
 
-    public void setDisaffectionId(long disaffectionId) {
+    public void setDisaffectionId(Long disaffectionId) {
         this.disaffectionId = disaffectionId;
     }
 

@@ -136,6 +136,23 @@ public class OffenseRepository implements GenericRepository<OffenseEntity> {
         return new ArrayList<>();
     }
 
+    public List<OffenseEntity> findAllByDisaffectionId(long disaffectionId) {
+        String sql = "SELECT * FROM offenses WHERE disaffection_id = ?";
+
+        try (PreparedStatement preparedStatement = getCurrentConnection().prepareStatement(sql)) {
+            preparedStatement.setLong(1, disaffectionId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            List<OffenseEntity> offenses = new ArrayList<>();
+            while (resultSet.next()) {
+                offenses.add(mapResultSetToEntity(resultSet));
+            }
+            return offenses;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
     @Override
     public OffenseEntity mapResultSetToEntity(ResultSet resultSet) throws SQLException {
         OffenseEntity offenseEntity = new OffenseEntity();

@@ -1,6 +1,7 @@
 package com.filipeabessa.SysGuardeiNoCorazonBackend.offense.dtos;
 
 public class CreateOffenseDto {
+    private long disaffectionId;
     private String title;
     private String description;
     private String cursedFamilyMember;
@@ -20,5 +21,9 @@ public class CreateOffenseDto {
 
     public String getOffendingPerson() {
         return offendingPerson;
+    }
+
+    public long getDisaffectionId() {
+        return disaffectionId;
     }
 }

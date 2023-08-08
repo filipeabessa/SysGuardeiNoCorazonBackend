@@ -1,6 +1,8 @@
 package com.filipeabessa.SysGuardeiNoCorazonBackend.disaffection;
 
 import com.filipeabessa.SysGuardeiNoCorazonBackend.common.GenericRepository;
+import com.filipeabessa.SysGuardeiNoCorazonBackend.offense.OffenseEntity;
+import com.filipeabessa.SysGuardeiNoCorazonBackend.offense.OffenseRepository;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
@@ -15,7 +17,11 @@ import static com.filipeabessa.SysGuardeiNoCorazonBackend.common.ConnectionManag
 @Repository
 public class DisaffectionRepository implements GenericRepository<DisaffectionEntity> {
 
+    OffenseRepository offenseRepository;
+
     public DisaffectionRepository() {
+        offenseRepository = new OffenseRepository();
+
         String sql = "CREATE TABLE IF NOT EXISTS disaffections (" +
                 "id BIGINT PRIMARY KEY AUTO_INCREMENT," +
                 "name VARCHAR(255) NOT NULL," +
@@ -111,7 +117,10 @@ public class DisaffectionRepository implements GenericRepository<DisaffectionEnt
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                return Optional.of(mapResultSetToEntity(resultSet));
+                List<OffenseEntity> offenses = offenseRepository.findAllByDisaffectionId(id);
+                DisaffectionEntity disaffection = mapResultSetToEntity(resultSet);
+                disaffection.setOffenses(offenses);
+                return Optional.of(disaffection);
             }
             return Optional.empty();
         } catch (SQLException e) {
