@@ -33,7 +33,7 @@ public class OffenseRepository implements GenericRepository<OffenseEntity> {
     }
     @Override
     public OffenseEntity create(OffenseEntity offenseEntity) {
-        String sql = "INSERT INTO offenses (disaffection_id, title, description, cursed_family_member, offending_person) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO offenses (disaffection_id, title, description, cursed_family_member, offending_person, occurrence_date_time) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement preparedStatement = getCurrentConnection().prepareStatement(sql)) {
             preparedStatement.setLong(1, offenseEntity.getDisaffectionId());
@@ -41,6 +41,7 @@ public class OffenseRepository implements GenericRepository<OffenseEntity> {
             preparedStatement.setString(3, offenseEntity.getDescription());
             preparedStatement.setString(4, offenseEntity.getCursedFamilyMember());
             preparedStatement.setString(5, offenseEntity.getOffendingPerson());
+            preparedStatement.setString(6, offenseEntity.getOccurrenceDateTime());
             preparedStatement.execute();
             return offenseEntity;
         } catch (SQLException e) {
@@ -51,7 +52,7 @@ public class OffenseRepository implements GenericRepository<OffenseEntity> {
 
     @Override
     public OffenseEntity update(OffenseEntity offenseEntity) {
-        String sql = "UPDATE offenses SET disaffection_id = ?, title = ?, description = ?, cursed_family_member = ?, offending_person = ? WHERE id = ?";
+        String sql = "UPDATE offenses SET disaffection_id = ?, title = ?, description = ?, cursed_family_member = ?, offending_person = ?, occurrence_date_time WHERE id = ?";
 
         try (PreparedStatement preparedStatement = getCurrentConnection().prepareStatement(sql)) {
             preparedStatement.setLong(1, offenseEntity.getDisaffectionId());
@@ -60,6 +61,7 @@ public class OffenseRepository implements GenericRepository<OffenseEntity> {
             preparedStatement.setString(4, offenseEntity.getCursedFamilyMember());
             preparedStatement.setString(5, offenseEntity.getOffendingPerson());
             preparedStatement.setLong(6, offenseEntity.getId());
+            preparedStatement.setString(7, offenseEntity.getOccurrenceDateTime());
             preparedStatement.execute();
             return offenseEntity;
         } catch (SQLException e) {
@@ -162,6 +164,7 @@ public class OffenseRepository implements GenericRepository<OffenseEntity> {
         offenseEntity.setDescription(resultSet.getString("description"));
         offenseEntity.setCursedFamilyMember(resultSet.getString("cursed_family_member"));
         offenseEntity.setOffendingPerson(resultSet.getString("offending_person"));
+        offenseEntity.setOccurrenceDateTime(resultSet.getString("occurrence_date_time"));
         return offenseEntity;
     }
 }

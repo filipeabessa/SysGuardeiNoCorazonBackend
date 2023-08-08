@@ -10,8 +10,6 @@ public class DisaffectionEntity {
     private long id;
     private String title;
     private String description;
-    private Timestamp createdAt;
-    private Timestamp updatedAt;
     private String witnesses;
     private String involvedPeople;
     private List<OffenseEntity> offenses;
@@ -38,22 +36,6 @@ public class DisaffectionEntity {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Timestamp getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Timestamp updatedAt) {
-        this.updatedAt = updatedAt;
     }
 
     public String getWitnesses() {

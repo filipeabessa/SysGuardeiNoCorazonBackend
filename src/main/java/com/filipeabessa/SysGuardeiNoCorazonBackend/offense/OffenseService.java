@@ -21,6 +21,7 @@ public class OffenseService {
         offenseEntity.setDescription(createOffenseDto.getDescription());
         offenseEntity.setCursedFamilyMember(createOffenseDto.getCursedFamilyMember());
         offenseEntity.setOffendingPerson(createOffenseDto.getOffendingPerson());
+        offenseEntity.setOccurrenceDateTime(createOffenseDto.getOccurrenceDateTime());
 
         return offenseRepository.create(offenseEntity);
     }

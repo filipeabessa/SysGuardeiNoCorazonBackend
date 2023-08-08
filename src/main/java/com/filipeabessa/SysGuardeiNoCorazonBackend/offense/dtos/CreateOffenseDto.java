@@ -7,6 +7,8 @@ public class CreateOffenseDto {
     private String cursedFamilyMember;
     private String offendingPerson;
 
+    private String occurrenceDateTime;
+
     public String getTitle() {
         return title;
     }
@@ -25,5 +27,9 @@ public class CreateOffenseDto {
 
     public long getDisaffectionId() {
         return disaffectionId;
+    }
+
+    public String getOccurrenceDateTime() {
+        return occurrenceDateTime;
     }
 }

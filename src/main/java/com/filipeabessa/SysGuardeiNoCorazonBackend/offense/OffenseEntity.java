@@ -9,6 +9,8 @@ public class OffenseEntity {
     private String cursedFamilyMember;
     private String offendingPerson;
 
+    private String occurrenceDateTime;
+
     public long getId() {
         return id;
     }
@@ -55,5 +57,13 @@ public class OffenseEntity {
 
     public void setOffendingPerson(String offendingPerson) {
         this.offendingPerson = offendingPerson;
+    }
+
+    public String getOccurrenceDateTime() {
+        return occurrenceDateTime;
+    }
+
+    public void setOccurrenceDateTime(String occurrenceDateTime) {
+        this.occurrenceDateTime = occurrenceDateTime;
     }
 }

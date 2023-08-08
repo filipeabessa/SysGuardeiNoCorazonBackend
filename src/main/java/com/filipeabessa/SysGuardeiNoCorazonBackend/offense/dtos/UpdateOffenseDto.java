@@ -6,6 +6,8 @@ public class UpdateOffenseDto {
     private String cursedFamilyMember;
     private String offendingPerson;
 
+    private String occurrenceDateTime;
+
     public String getTitle() {
         return title;
     }
@@ -20,5 +22,9 @@ public class UpdateOffenseDto {
 
     public String getOffendingPerson() {
         return offendingPerson;
+    }
+
+    public String getOccurrenceDateTime() {
+        return occurrenceDateTime;
     }
 }

@@ -26,8 +26,6 @@ public class DisaffectionRepository implements GenericRepository<DisaffectionEnt
                 "id BIGINT PRIMARY KEY AUTO_INCREMENT," +
                 "name VARCHAR(255) NOT NULL," +
                 "description VARCHAR(255) NOT NULL," +
-                "created_at DATETIME DEFAULT CURRENT_TIMESTAMP," +
-                "updated_at DATETIME DEFAULT CURRENT_TIMESTAMP," +
                 "witnesses VARCHAR(255) NOT NULL," +
                 "involved_people VARCHAR(255) NOT NULL" +
                 ");";
@@ -39,15 +37,13 @@ public class DisaffectionRepository implements GenericRepository<DisaffectionEnt
     }
     @Override
     public DisaffectionEntity create(DisaffectionEntity entity) throws SQLException {
-        String sql = "INSERT INTO disaffections (name, description, created_at, updated_at, witnesses, involved_people) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO disaffections (name, description, witnesses, involved_people) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement preparedStatement = getCurrentConnection().prepareStatement(sql)) {
             preparedStatement.setString(1, entity.getTitle());
             preparedStatement.setString(2, entity.getDescription());
-            preparedStatement.setTimestamp(3, entity.getCreatedAt());
-            preparedStatement.setTimestamp(4, entity.getUpdatedAt());
-            preparedStatement.setString(5, entity.getWitnesses());
-            preparedStatement.setString(6, entity.getInvolvedPeople());
+            preparedStatement.setString(3, entity.getWitnesses());
+            preparedStatement.setString(4, entity.getInvolvedPeople());
             preparedStatement.execute();
             return entity;
         } catch (SQLException e) {
@@ -58,16 +54,14 @@ public class DisaffectionRepository implements GenericRepository<DisaffectionEnt
 
     @Override
     public DisaffectionEntity update(DisaffectionEntity entity) {
-        String sql = "UPDATE disaffections SET name = ?, description = ?, created_at = ?, updated_at = ?, witnesses = ?, involved_people = ? WHERE id = ?";
+        String sql = "UPDATE disaffections SET name = ?, description = ?, witnesses = ?, involved_people = ? WHERE id = ?";
 
         try (PreparedStatement preparedStatement = getCurrentConnection().prepareStatement(sql)) {
             preparedStatement.setString(1, entity.getTitle());
             preparedStatement.setString(2, entity.getDescription());
-            preparedStatement.setTimestamp(3, entity.getCreatedAt());
-            preparedStatement.setTimestamp(4, entity.getUpdatedAt());
-            preparedStatement.setString(5, entity.getWitnesses());
-            preparedStatement.setString(6, entity.getInvolvedPeople());
-            preparedStatement.setLong(7, entity.getId());
+            preparedStatement.setString(3, entity.getWitnesses());
+            preparedStatement.setString(4, entity.getInvolvedPeople());
+            preparedStatement.setLong(5, entity.getId());
             preparedStatement.execute();
             return entity;
         } catch (SQLException e) {
@@ -150,8 +144,6 @@ public class DisaffectionRepository implements GenericRepository<DisaffectionEnt
         entity.setId(resultSet.getLong("id"));
         entity.setTitle(resultSet.getString("name"));
         entity.setDescription(resultSet.getString("description"));
-        entity.setCreatedAt(resultSet.getTimestamp("created_at"));
-        entity.setUpdatedAt(resultSet.getTimestamp("updated_at"));
         entity.setWitnesses(resultSet.getString("witnesses"));
         entity.setInvolvedPeople(resultSet.getString("involved_people"));
         return entity;
