@@ -1,6 +1,6 @@
 # SysGuardeiNoCorazonBackend
 
-"SysGuardeiNoCorazonBackend" é uma API RESTful desenvolvida para o curso "Desenvolvimento Web 2" no curso "Análise e Desenvolvimento de Sistemas" no IFPE. O sistema tem como objetivo auxiliar pessoas que tenham enfrentado situações de bullying a registrar informações sobre os agressores e os incidentes que sofreram.
+"SysGuardeiNoCorazonBackend" é uma API RESTful desenvolvida para a disciplina Desenvolvimento Web 2 no curso Análise e Desenvolvimento de Sistemas do IFPE. O sistema tem como objetivo auxiliar pessoas que tenham enfrentado situações de bullying a registrar informações sobre os incidentes que sofreram.
 
 ## Tecnologias utilizadas
 
