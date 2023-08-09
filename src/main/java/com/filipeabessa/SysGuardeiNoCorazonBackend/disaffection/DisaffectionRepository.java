@@ -22,18 +22,18 @@ public class DisaffectionRepository implements GenericRepository<DisaffectionEnt
     public DisaffectionRepository() {
         offenseRepository = new OffenseRepository();
 
-        String sql = "CREATE TABLE IF NOT EXISTS disaffections (" +
-                "id BIGINT PRIMARY KEY AUTO_INCREMENT," +
-                "name VARCHAR(255) NOT NULL," +
-                "description VARCHAR(255) NOT NULL," +
-                "witnesses VARCHAR(255) NOT NULL," +
-                "involved_people VARCHAR(255) NOT NULL" +
-                ");";
-        try (PreparedStatement preparedStatement = getCurrentConnection().prepareStatement(sql)) {
-            preparedStatement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+//        String sql = "CREATE TABLE IF NOT EXISTS disaffections ("
+//                + "id BIGINT PRIMARY KEY AUTO_INCREMENT,"
+//                + "name VARCHAR(255) NOT NULL,"
+//                + "description VARCHAR(255) NOT NULL,"
+//                + "witnesses VARCHAR(255) NOT NULL,"
+//                + "involved_people VARCHAR(255) NOT NULL"
+//                + ");";
+//        try (PreparedStatement preparedStatement = getCurrentConnection().prepareStatement(sql)) {
+//            preparedStatement.execute();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
     }
     @Override
     public DisaffectionEntity create(DisaffectionEntity entity) throws SQLException {
